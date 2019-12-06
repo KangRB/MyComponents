@@ -1,3 +1,7 @@
 import { configure } from '@storybook/react';
 
-configure(require.context('../components', true, /\.stories\.js$/), module);
+// automatically import all files ending in *.stories.js
+configure(
+  require.context('../components/stories', true, /\.stories\.js$/),
+  module
+);

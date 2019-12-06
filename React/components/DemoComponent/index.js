@@ -6,6 +6,10 @@ export default class Demo extends Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    //
+  }
+
   render() {
     return (
       <div>
