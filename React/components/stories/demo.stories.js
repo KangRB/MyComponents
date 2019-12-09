@@ -3,6 +3,6 @@ import { storiesOf } from '@storybook/react';
 import Demo from '../DemoComponent/index';
 import note from './note.md';
 
-storiesOf('Demo', module).add('样例', () => <Demo />, {
+storiesOf('Demo', module).add('样例', () => <Demo title={'props'} />, {
   notes: note
 });

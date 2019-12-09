@@ -14,6 +14,7 @@ export default class Demo extends Component {
     return (
       <div>
         <h1>DEMO</h1>
+        <h2>{this.props.title}</h2>
       </div>
     );
   }
