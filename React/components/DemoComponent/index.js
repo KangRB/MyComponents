@@ -7,7 +7,7 @@ export default class Demo extends Component {
   }
 
   componentDidMount() {
-    //
+    console.log('控制台输出');
   }
 
   render() {
