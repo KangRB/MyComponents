@@ -1,0 +1,15 @@
+.content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.content .canvas {
+  width: 1000px;
+  background-color: #eee;
+}
+
+.content .tools {
+  width: 600px;
+  height: 500px;
+  background-color: #eee;
+}

@@ -3,6 +3,8 @@ import GridLayout, {
   Responsive as ResponsiveGridLayout
 } from 'react-grid-layout';
 import _ from 'lodash';
+import './css/myFirstGrid.css';
+
 export default class MyFirstGrid extends Component {
   constructor(props) {
     super();
@@ -12,22 +14,26 @@ export default class MyFirstGrid extends Component {
         { i: '2', x: 3, y: 0, w: 2, h: 4 },
         { i: '3', x: 6, y: 0, w: 2, h: 4 },
         { i: '4', x: 9, y: 0, w: 2, h: 4 },
-        { i: '5', x: 12, y: 0, w: 2, h: 4 },
-        { i: '6', x: 15, y: 0, w: 2, h: 4 },
-        { i: '7', x: 18, y: 0, w: 2, h: 4 }
-      ]
+        { i: '5', x: 12, y: 0, w: 2, h: 4 }
+      ],
+      currentEvent: {}
     };
   }
   onRemoveItem(i) {
-    console.log('removing', i);
-    this.setState({ layout: _.reject(this.state.layout, { i: i }) });
+    // 删除
+    const { layout } = this.state;
+    _.remove(layout, item => {
+      return item.i === i;
+    });
+    this.setState({ layout });
   }
   onClick(i) {
-    const { layout } = this.state;
+    let { layout } = this.state;
     Object.values(layout).map(v => {
       v['current'] = i === v.i ? true : false;
     });
-    this.setState({ layout });
+
+    this.setState({ layout, currentEvent: layout[Number(i) - 1] });
   }
   createElement(el) {
     const removeStyle = {
@@ -36,7 +42,7 @@ export default class MyFirstGrid extends Component {
       top: 0,
       cursor: 'pointer'
     };
-    const i = el.add ? '+' : el.i;
+    const i = el.i;
     return (
       <div
         key={i}
@@ -44,33 +50,25 @@ export default class MyFirstGrid extends Component {
         style={el.current ? styles.current : styles.bg}
         onClick={this.onClick.bind(this, i)}
       >
-        {el.add ? (
+        <span className="text">{i}</span>
+        {el.current && (
           <span
-            className="add text"
-            onClick={this.onAddItem}
-            title="You can add an item by clicking here, too."
+            className="remove"
+            style={removeStyle}
+            onClick={this.onRemoveItem.bind(this, i)}
           >
-            Add +
+            x
           </span>
-        ) : (
-          <span className="text">{i}</span>
         )}
-        <span
-          className="remove"
-          style={removeStyle}
-          onClick={this.onRemoveItem.bind(this, i)}
-        >
-          x
-        </span>
       </div>
     );
   }
   render() {
     // layout is an array of objects, see the demo for more complete usage
-    const { layout } = this.state;
+    const { layout, currentEvent } = this.state;
     return (
-      <div>
-        <div style={styles.div}>
+      <div className="content">
+        <div className="canvas">
           <GridLayout
             className="layout"
             layout={layout} // 子集
@@ -86,16 +84,23 @@ export default class MyFirstGrid extends Component {
             {_.map(layout, el => this.createElement(el))}
           </GridLayout>
         </div>
+        <div className="tools">
+          {layout.map(v => {
+            <div>{`i：${v.i}`}</div>;
+          })}
+          {currentEvent && (
+            <div>
+              当前项：X:{currentEvent['x']} Y:{currentEvent['y']} W:
+              {currentEvent['w']}H:{currentEvent['h']}
+            </div>
+          )}
+        </div>
       </div>
     );
   }
 }
 
 const styles = {
-  div: {
-    width: 1000,
-    background: '#eee'
-  },
   bg: { background: '#ccc' },
   current: {
     border: '2px solid red',

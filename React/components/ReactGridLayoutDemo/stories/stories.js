@@ -5,13 +5,10 @@ import AddRemove from '../addRemove';
 import note from './note.md';
 // import { action } from '@storybook/addon-actions';
 
-storiesOf('ReactGridLayoutDemo', module).add(
-  '网格布局',
-  () => <ReactGridLayoutDemo />,
-  {
+storiesOf('ReactGridLayoutDemo', module)
+  .add('网格布局', () => <ReactGridLayoutDemo />, {
     notes: note
-  }
-);
-storiesOf('add and remove', module).add('可删除', () => <AddRemove />, {
-  notes: note
-});
+  })
+  .add('可删除', () => <AddRemove />, {
+    notes: note
+  });
